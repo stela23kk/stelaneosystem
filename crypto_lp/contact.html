@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせ - NEO System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background-color: #f9fafb;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 3rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid #667eea;
+            text-align: center;
+        }
+
+        .intro-text {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .required {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-left: 0.3rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .form-help {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-top: 2rem;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-button:active {
+            transform: translateY(0);
+        }
+
+        .submit-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .notice-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-radius: 5px;
+        }
+
+        .notice-box h3 {
+            color: #1976d2;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .notice-box ul {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .notice-box li {
+            margin: 0.3rem 0;
+        }
+
+        .contact-info {
+            background: #f9fafb;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            color: #764ba2;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info p {
+            margin: 0.5rem 0;
+        }
+
+        .contact-info a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        .success-message {
+            display: none;
+            background: #d4edda;
+            border: 2px solid #c3e6cb;
+            color: #155724;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .error-message {
+            display: none;
+            background: #f8d7da;
+            border: 2px solid #f5c6cb;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        footer {
+            background: #2d3748;
+            color: white;
+            padding: 3rem 2rem 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #4a5568;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">NEO SYSTEM</div>
+            <a href="index.html" class="back-link">← トップページに戻る</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>📞 お問い合わせ</h1>
+        
+        <div class="intro-text">
+            <p>NEO Systemに関するご質問・ご相談は、下記フォームよりお気軽にお問い合わせください。</p>
+            <p>営業時間内（平日10:00〜18:00）に順次ご対応させていただきます。</p>
+        </div>
+
+        <div class="success-message" id="successMessage">
+            <h3>✅ 送信完了</h3>
+            <p>お問い合わせを受け付けました。</p>
+            <p>担当者より2営業日以内にご連絡させていただきます。</p>
+        </div>
+
+        <div class="notice-box">
+            <h3>📋 お問い合わせ前にご確認ください</h3>
+            <ul>
+                <li>お急ぎの場合は、メール（kk.stela.23@gmail.com）にて直接ご連絡ください</li>
+                <li>ご入力いただいた個人情報は、<a href="privacy.html" style="color: #1976d2;">プライバシーポリシー</a>に基づき適切に管理いたします</li>
+                <li>土日祝日のお問い合わせは、翌営業日以降の対応となります</li>
+            </ul>
+        </div>
+
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="name">
+                    お名前<span class="required">*必須</span>
+                </label>
+                <input 
+                    type="text" 
+                    id="name" 
+                    name="name" 
+                    required 
+                    placeholder="例：山田 太郎"
+                    autocomplete="name"
+                >
+                <div class="error-message" id="nameError">お名前を入力してください</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">
+                    メールアドレス<span class="required">*必須</span>
+                </label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    required 
+                    placeholder="例：example@email.com"
+                    autocomplete="email"
+                >
+                <div class="form-help">返信先のメールアドレスをご入力ください</div>
+                <div class="error-message" id="emailError">正しいメールアドレスを入力してください</div>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">
+                    電話番号<span class="required">*必須</span>
+                </label>
+                <input 
+                    type="tel" 
+                    id="phone" 
+                    name="phone" 
+                    required 
+                    placeholder="例：090-1234-5678"
+                    autocomplete="tel"
+                >
+                <div class="form-help">ハイフン（-）を含めてご入力ください</div>
+                <div class="error-message" id="phoneError">電話番号を入力してください</div>
+            </div>
+
+            <div class="form-group">
+                <label for="message">
+                    お問い合わせ内容<span class="required">*必須</span>
+                </label>
+                <textarea 
+                    id="message" 
+                    name="message" 
+                    required 
+                    placeholder="お問い合わせ内容を具体的にご記入ください。&#10;&#10;例：&#10;・NEO Growプランの詳細について知りたい&#10;・NeoEase接続オプションの料金について&#10;・デモ環境の利用について"
+                ></textarea>
+                <div class="form-help">できるだけ具体的にご記入いただくと、スムーズにご対応できます</div>
+                <div class="error-message" id="messageError">お問い合わせ内容を入力してください</div>
+            </div>
+
+            <button type="submit" class="submit-button" id="submitButton">
+                📧 送信する
+            </button>
+        </form>
+
+        <div class="contact-info">
+            <h3>📧 直接メールでのお問い合わせ</h3>
+            <p>メールアドレス：<a href="mailto:kk.stela.23@gmail.com">kk.stela.23@gmail.com</a></p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                受付時間：平日 10:00〜18:00（土日祝日を除く）
+            </p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="tokushoho.html">特定商取引法</a>
+                <a href="terms.html">利用規約</a>
+                <a href="security.html">情報セキュリティ方針</a>
+                <a href="privacy.html">プライバシーポリシー</a>
+            </div>
+            <div class="copyright">
+                © 2026 株式会社STeLA All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // フォームのバリデーションと送信処理
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // エラーメッセージをリセット
+            document.querySelectorAll('.error-message').forEach(el => el.classList.remove('show'));
+            
+            // フォームの値を取得
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            let hasError = false;
+            
+            // バリデーション
+            if (!name) {
+                document.getElementById('nameError').classList.add('show');
+                hasError = true;
+            }
+            
+            if (!email || !isValidEmail(email)) {
+                document.getElementById('emailError').classList.add('show');
+                hasError = true;
+            }
+            
+            if (!phone) {
+                document.getElementById('phoneError').classList.add('show');
+                hasError = true;
+            }
+            
+            if (!message) {
+                document.getElementById('messageError').classList.add('show');
+                hasError = true;
+            }
+            
+            if (hasError) {
+                return;
+            }
+            
+            // 送信ボタンを無効化
+            const submitButton = document.getElementById('submitButton');
+            submitButton.disabled = true;
+            submitButton.textContent = '送信中...';
+            
+            // 実際の送信処理（mailtoリンクで代替）
+            const subject = encodeURIComponent('NEO System お問い合わせ');
+            const body = encodeURIComponent(
+                `お名前: ${name}\n` +
+                `メールアドレス: ${email}\n` +
+                `電話番号: ${phone}\n\n` +
+                `お問い合わせ内容:\n${message}`
+            );
+            
+            // mailtoリンクを開く
+            window.location.href = `mailto:kk.stela.23@gmail.com?subject=${subject}&body=${body}`;
+            
+            // 成功メッセージを表示
+            setTimeout(() => {
+                document.getElementById('successMessage').classList.add('show');
+                document.getElementById('contactForm').reset();
+                submitButton.disabled = false;
+                submitButton.textContent = '📧 送信する';
+                
+                // ページトップにスクロール
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 500);
+        });
+        
+        // メールアドレスのバリデーション
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        // リアルタイムバリデーション
+        document.getElementById('name').addEventListener('blur', function() {
+            if (this.value.trim()) {
+                document.getElementById('nameError').classList.remove('show');
+            }
+        });
+        
+        document.getElementById('email').addEventListener('blur', function() {
+            if (this.value.trim() && isValidEmail(this.value.trim())) {
+                document.getElementById('emailError').classList.remove('show');
+            }
+        });
+        
+        document.getElementById('phone').addEventListener('blur', function() {
+            if (this.value.trim()) {
+                document.getElementById('phoneError').classList.remove('show');
+            }
+        });
+        
+        document.getElementById('message').addEventListener('blur', function() {
+            if (this.value.trim()) {
+                document.getElementById('messageError').classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
